@@ -3,6 +3,7 @@ Changes.md
 .git/
 Makefile
 MooX-Role-OpenGraph-*/
+MooX-Role-OpenGraph-*.tar.gz
 MYMETA.*
 META.*
 blib/
