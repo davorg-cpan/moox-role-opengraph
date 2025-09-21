@@ -93,7 +93,7 @@ use Moo::Role;
 
 our $VERSION = '0.0.1';
 
-requires qw[og_title og_type og_url];
+requires qw[og_title og_type og_description og_url];
 
 sub title_tag($self) {
   return sprintf '<title>%s</title>', $self->og_title;
@@ -104,25 +104,31 @@ sub canonical_tag($self) {
 }
 
 sub og_title_tag($self) {
-  return sprintf '<meta property="og:title" content="%s" />', $self->og_title;
+  return sprintf '<meta property="og:title" content="%s">', $self->og_title;
 }
 
 sub og_type_tag($self) {
-  return sprintf '<meta property="og:type" content="%s" />', $self->og_type;
+  return sprintf '<meta property="og:type" content="%s">', $self->og_type;
+}
+
+sub og_description_tag($self) {
+  return sprintf '<meta property="og:description" content="%s">',i
+                 $self->og_description;
 }
 
 sub og_url_tag($self) {
-  return sprintf '<meta property="og:url" content="%s" />', $self->og_url;
+  return sprintf '<meta property="og:url" content="%s">', $self->og_url;
 }
 
 sub og_image_tag($self) {
   return '' unless $self->can('og_image');
-  return sprintf '<meta property="og:image" content="%s" />', $self->og_image;
+  return sprintf '<meta property="og:image" content="%s">', $self->og_image;
 }
 
 sub og_tags($self) {
   return join "\n", $self->og_title_tag,
                     $self->og_type_tag,
+                    $self->og_description_tag,
                     $self->og_url_tag,
                    ($self->og_image_tag || ());
 }
