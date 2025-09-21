@@ -13,6 +13,23 @@ my $obj = Object->new({
 
 ok $obj;
 
-diag $obj->tags;
+my @tests = ({
+  method => 'title_tag',
+  text   => '<title>title</title>',
+}, {
+  method => 'canonical_tag',
+  text   => '<link rel="canonical" href="https://example.com/object/">',
+}, {
+  method => 'og_title_tag',
+  text   => '<meta property="og:title" content="title" />',
+}, {
+  method => 'og_type_tag',
+  text   => '<meta property="og:type" content="object" />'
+});
+
+for (@tests) {
+  my $method = $_->{method};
+  is $obj->$method, $_->{text}, "Calling $method is correct";
+}
 
 done_testing;
