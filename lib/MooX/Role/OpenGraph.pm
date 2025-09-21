@@ -91,7 +91,7 @@ use feature qw[signatures];
 
 use Moo::Role;
 
-our @VERSION = '0.0.1';
+our $VERSION = '0.0.1';
 
 requires qw[og_title og_type og_url];
 
