@@ -98,7 +98,7 @@ use feature qw[signatures];
 
 use Moo::Role;
 
-our $VERSION = '0.0.2';
+our $VERSION = '0.0.3';
 
 requires qw[og_title og_type og_description og_url];
 
@@ -119,7 +119,7 @@ sub og_type_tag($self) {
 }
 
 sub og_description_tag($self) {
-  return sprintf '<meta property="og:description" content="%s">',i
+  return sprintf '<meta property="og:description" content="%s">',
                  $self->og_description;
 }
 
