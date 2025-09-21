@@ -15,11 +15,14 @@ MooX::Role::OpenGraph - A role for generating OpenGraph meta tags
   has 'og_url'   => (is => 'ro', required => 1);
   has 'og_image' => (is => 'ro'); # optional
 
+  # And later, in the code that builds the website
+
   my $page = MyWebPage->new(
-    og_title => "My Page Title",
-    og_type  => "website",
-    og_url   => "https://example.com/my-page",
-    og_image => "https://example.com/image.jpg",
+    og_title       => "My Page Title",
+    og_type        => "website",
+    og_description => 'This is a lovely websote',
+    og_url         => "https://example.com/my-page",
+    og_image       => "https://example.com/image.jpg",
   );
 
   # Print tags separately
@@ -68,6 +71,10 @@ Returns the OpenGraph title meta tag.
 =head2 og_type_tag
 
 Returns the OpenGraph type meta tag.
+
+=head2 og_description_tag
+
+Returns the OpenGraph description meta tag.
 
 =head2 og_url_tag
 
