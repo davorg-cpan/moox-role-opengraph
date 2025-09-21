@@ -21,10 +21,10 @@ my @tests = ({
   text   => '<link rel="canonical" href="https://example.com/object/">',
 }, {
   method => 'og_title_tag',
-  text   => '<meta property="og:title" content="title" />',
+  text   => '<meta property="og:title" content="title">',
 }, {
   method => 'og_type_tag',
-  text   => '<meta property="og:type" content="object" />'
+  text   => '<meta property="og:type" content="object">'
 });
 
 for (@tests) {
