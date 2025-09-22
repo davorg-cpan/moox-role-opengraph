@@ -16,27 +16,58 @@ ok $obj;
 
 my @tests = ({
   method => 'title_tag',
-  text   => '<title>title</title>',
+  tag    => 'title',
+  attrs  => [],
+  text   => 'title',
 }, {
   method => 'canonical_tag',
-  text   => '<link rel="canonical" href="https://example.com/object/">',
+  tag    => 'link',
+  attrs  => [qw(
+    rel="canonical"
+    href="https://example.com/object/"
+  )],
 }, {
   method => 'og_title_tag',
-  text   => '<meta property="og:title" content="title">',
+  tag    => 'meta',
+  attrs  => [qw(
+    property="og:title"
+    content="title"
+  )],
 }, {
   method => 'og_type_tag',
-  text   => '<meta property="og:type" content="object">'
+  tag    => 'meta',
+  attrs  => [qw(
+    property="og:type"
+    content="object"
+  )],
 }, {
   method => 'twitter_card_tag',
-  text   => '<meta name="twitter:card" content="summary_large_image">',
+  tag    => 'meta',
+  attrs  => [qw( 
+    name="twitter:card"
+    content="summary_large_image"
+  )],
 }, {
   method => 'twitter_title_tag',
-  text   => '<meta name="twitter:title" content="title">',
+  tag    => 'meta',
+  attrs  => [qw(
+    name="twitter:title"
+    content="title"
+  )],
 });
 
 for (@tests) {
+  next unless $_->{tag};
   my $method = $_->{method};
-  is $obj->$method, $_->{text}, "Calling $method is correct";
+  my $html   = $obj->$method;
+
+  like $html, qr[^<$_->{tag}], "Tag <$_->{tag}> is correct";
+  if (exists $_->{text} and $_->{text}) {
+    like $html, qr[>$_->{text}<], qq[Text "$_->{text}" is correct];
+  }
+  for my $attr (@{ $_->{attrs} }) {
+    like $html, qr[$attr], qq[Attribute '$attr' is correct];
+  }
 }
 
 diag $obj->tags;

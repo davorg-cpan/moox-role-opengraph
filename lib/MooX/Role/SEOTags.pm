@@ -121,92 +121,100 @@ Returns all tags (title, canonical, and OpenGraph) as a single string.
 
 use feature qw[signatures];
 use Moo::Role;
+use HTML::Tiny;
 
 our $VERSION = '1.0.0';
 
 requires qw[og_title og_type og_description og_url];
 
+has _html => (
+  is => 'ro',
+  default => sub { HTML::Tiny->new(mode => 'html') },
+);
+
+sub _tag($self, $tag, @args) {
+  return $self->_html->$tag(@args);
+}
+
 sub title_tag($self) {
-	return sprintf '<title>%s</title>', $self->og_title;
+  return $self->_tag('title', {}, $self->og_title);
 }
 
 sub canonical_tag($self) {
-	return sprintf '<link rel="canonical" href="%s">', $self->og_url;
+  return $self->_tag('link', { rel => 'canonical', href => $self->og_url });
 }
 
 sub description_tag($self) {
-	return sprintf '<meta name="description" content="%s">', $self->og_description;
+  return $self->_tag('meta', { name => "description",  content => $self->og_description });
 }
 
 sub og_title_tag($self) {
-	return sprintf '<meta property="og:title" content="%s">', $self->og_title;
+  return $self->_tag('meta', { property => "og:title", content =>  $self->og_title });
 }
 
 sub og_type_tag($self) {
-	return sprintf '<meta property="og:type" content="%s">', $self->og_type;
+  return $self->_tag('meta', { property => "og:type", content => $self->og_type });
 }
 
 sub og_description_tag($self) {
-	return sprintf '<meta property="og:description" content="%s">',
-								 $self->og_description;
+  return $self->_tag('meta', { property => "og:description",  content => $self->og_description });
 }
 
 sub og_url_tag($self) {
-	return sprintf '<meta property="og:url" content="%s">', $self->og_url;
+  return $self->_tag('meta', { property => "og:url", content => $self->og_url });
 }
 
 sub og_image_tag($self) {
-		return '' unless $self->can('og_image');
-		my $img = $self->og_image;
-		return '' unless defined $img && length $img;
-		return sprintf '<meta property="og:image" content="%s">', $img;
+  return '' unless $self->can('og_image');
+  my $img = $self->og_image;
+  return '' unless defined $img && length $img;
+  return $self->_tag('meta', { property => "og:image", content => $img });
 }
 
 sub og_tags($self) {
-	return join "\n", $self->og_title_tag,
-										$self->og_type_tag,
-										$self->og_description_tag,
-										$self->og_url_tag,
-									 ($self->og_image_tag || ());
+  return join "\n", $self->og_title_tag,
+                    $self->og_type_tag,
+                    $self->og_description_tag,
+                    $self->og_url_tag,
+                   ($self->og_image_tag || ());
 }
 
 sub twitter_card_tag($self) {
-	my $card_type;
-	if ($self->can('twitter_card_type')) {
-		$card_type = $self->twitter_card_type;
-	}
-	else {
-		$card_type = $self->can('og_image') ? 'summary_large_image' : 'summary';
-	}
-	return qq[<meta name="twitter:card" content="$card_type">];
+  my $card_type;
+  if ($self->can('twitter_card_type')) {
+    $card_type = $self->twitter_card_type;
+  } else {
+    $card_type = $self->can('og_image') ? 'summary_large_image' : 'summary';
+  }
+  return $self->_tag('meta', { name => "twitter:card",  content =>$card_type });
 }
 
 sub twitter_title_tag($self) {
-	return sprintf '<meta name="twitter:title" content="%s">', $self->og_title;
+  return $self->_tag('meta', { name => "twitter:title", content => $self->og_title });
 }
 
 sub twitter_description_tag($self) {
-	return sprintf '<meta name="twitter:description" content="%s">', $self->og_description;
+  return $self->_tag('meta', { name => "twitter:description", content =>  $self->og_description });
 }
 
 sub twitter_image_tag($self) {
-	return unless $self->can('og_image');
-	return sprintf '<meta name="twitter:image" content="%s">', $self->og_image;
+  return unless $self->can('og_image');
+  return $self->_tag('meta', { name => "twitter:image", content => $self->og_image });
 }
 
 sub twitter_tags($self) {
-	return join "\n", $self->twitter_card_tag,
-										$self->twitter_title_tag,
-										$self->twitter_description_tag,
-									 ($self->twitter_image_tag || ());
+  return join "\n", $self->twitter_card_tag,
+                    $self->twitter_title_tag,
+                    $self->twitter_description_tag,
+                   ($self->twitter_image_tag || ());
 }
 
 sub tags($self) {
-	return join "\n", $self->title_tag,
-										$self->description_tag,
-										$self->canonical_tag,
-										$self->og_tags,
-										$self->twitter_tags;
+  return join "\n", $self->title_tag,
+                    $self->description_tag,
+                    $self->canonical_tag,
+                    $self->og_tags,
+                    $self->twitter_tags;
 }
 
 1;

@@ -6,6 +6,10 @@
 
 - Module renamed from MooX::Role::OpenGraph to MooX::Role::SEOTags. Now supports OpenGraph, Twitter, and general SEO tags.
 
+### Added
+
+- More tests
+
 ## [0.0.4] - 2025-09-22
 
 ### Added
