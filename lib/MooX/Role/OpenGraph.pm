@@ -20,7 +20,7 @@ MooX::Role::OpenGraph - A role for generating OpenGraph meta tags
   my $page = MyWebPage->new(
     og_title       => "My Page Title",
     og_type        => "website",
-    og_description => 'This is a lovely websote',
+    og_description => 'This is a lovely website',
     og_url         => "https://example.com/my-page",
     og_image       => "https://example.com/image.jpg",
   );
