@@ -1,20 +1,20 @@
 use ExtUtils::MakeMaker;
 
 WriteMakefile(
-    NAME              => 'MooX::Role::OpenGraph',
-    VERSION_FROM      => 'lib/MooX/Role/OpenGraph.pm',
+    NAME              => 'MooX::Role::SEOTags',
+    VERSION_FROM      => 'lib/MooX/Role/SEOTags.pm',
     MIN_PERL_VERSION  => '5.20.0', # signatures
     PREREQ_PM         => {
-        Moo             => 0,
+        Moo => 0,
     },
     TEST_REQUIRES => {
-        Moose => 0,
-    },
-    BUILD_REQUIRES    => {
-        Test::More    => 0,
+        Moose                => 0,
+        Test::More           => 0,
         namespace::autoclean => 0,
+        'Test::Pod'          => 0,
+        'Test::Pod::Coverage'=> 0,
     },
-    ABSTRACT_FROM     => 'lib/MooX/Role/OpenGraph.pm',
+    ABSTRACT_FROM     => 'lib/MooX/Role/SEOTags.pm',
     AUTHOR            => 'Dave Cross <dave@perlhacks.com>',
     LICENSE           => 'perl',
     META_MERGE        => {

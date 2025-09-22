@@ -78,7 +78,9 @@ Returns the OpenGraph type meta tag.
 
 =head2 og_description_tag
 
-Returns the OpenGraph description meta tag.
+  package MooX::Role::OpenGraph;
+
+  die "MooX::Role::OpenGraph has been renamed to MooX::Role::SEOTags. Please update your code to use the new module name.";
 
 =head2 og_url_tag
 
@@ -122,7 +124,7 @@ use feature qw[signatures];
 
 use Moo::Role;
 
-our $VERSION = '0.0.4';
+our $VERSION = '1.0.0';
 
 requires qw[og_title og_type og_description og_url];
 

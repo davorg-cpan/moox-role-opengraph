@@ -1,10 +1,12 @@
 package Object;
 
 use Moo;
-with 'MooX::Role::OpenGraph';
+use namespace::autoclean;
+with 'MooX::Role::SEOTags';
 
 has title => (
   is => 'ro',
+  required => 1,
 );
 
 has url => (
@@ -13,10 +15,12 @@ has url => (
 
 has type => (
   is => 'ro',
+  required => 1,
 );
 
 has desc => (
   is => 'ro',
+  required => 1,
 );
 
 has image => (
