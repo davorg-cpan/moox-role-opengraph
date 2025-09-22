@@ -1,5 +1,13 @@
 # Change Log
 
+## [0.0.4] - 2025-09-22
+
+### Added
+
+- Support for description tags
+
+- Support for Twitter/X tags
+
 ## [0.0.3] - 2025-09-21
 
 ### Fixed

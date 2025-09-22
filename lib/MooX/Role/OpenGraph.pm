@@ -64,6 +64,10 @@ Returns the HTML title tag.
 
 Returns the HTML canonical link tag.
 
+=head2 description_tag
+
+Returns the HTML meta description tag.
+
 =head2 og_title_tag
 
 Returns the OpenGraph title meta tag.
@@ -88,6 +92,26 @@ Returns the OpenGraph image meta tag if the og_image attribute is provided.
 
 Returns all OpenGraph meta tags as a single string.
 
+=head2 twitter_card_tag
+
+Returns the Twitter card meta tag.
+
+=head2 twitter_title_tag
+
+Returns the Twitter title meta tag.
+
+=head2 twitter_description_tag
+
+Returns the Twitter description meta tag.
+
+=head2 twitter_image_tag
+
+Returns the Twitter image meta tag if the og_image attribute is provided.
+
+=head2 twitter_tags
+
+Returns all Twitter meta tags as a single string.
+
 =head2 tags
 
 Returns all tags (title, canonical, and OpenGraph) as a single string.
@@ -98,7 +122,7 @@ use feature qw[signatures];
 
 use Moo::Role;
 
-our $VERSION = '0.0.3';
+our $VERSION = '0.0.4';
 
 requires qw[og_title og_type og_description og_url];
 
@@ -108,6 +132,10 @@ sub title_tag($self) {
 
 sub canonical_tag($self) {
   return sprintf '<link rel="canonical" href="%s">', $self->og_url;
+}
+
+sub description_tag($self) {
+  return sprintf '<meta name="description" content="%s">', $self->og_description;
 }
 
 sub og_title_tag($self) {
@@ -140,10 +168,43 @@ sub og_tags($self) {
                    ($self->og_image_tag || ());
 }
 
+sub twitter_card_tag($self) {
+  my $card_type;
+  if ($self->can('twitter_card_type')) {
+    $card_type = $self->twitter_card_type;
+  }
+  else {
+    $card_type = $self->can('og_image') ? 'summary_large_image' : 'summary';
+  }
+  return qq[<meta name="twitter:card" content="$card_type">];
+}
+
+sub twitter_title_tag($self) {
+  return sprintf '<meta name="twitter:title" content="%s">', $self->og_title;
+}
+
+sub twitter_description_tag($self) {
+  return sprintf '<meta name="twitter:description" content="%s">', $self->og_description;
+}
+
+sub twitter_image_tag($self) {
+  return unless $self->can('og_image');
+  return sprintf '<meta name="twitter:image" content="%s">', $self->og_image;
+}
+
+sub twitter_tags($self) {
+  return join "\n", $self->twitter_card_tag,
+                    $self->twitter_title_tag,
+                    $self->twitter_description_tag,
+                   ($self->twitter_image_tag || ());
+}
+
 sub tags($self) {
   return join "\n", $self->title_tag,
+                    $self->description_tag,
                     $self->canonical_tag,
-                    $self->og_tags;
+                    $self->og_tags,
+                    $self->twitter_tags;
 }
 
 1;
