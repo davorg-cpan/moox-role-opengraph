@@ -1,10 +1,16 @@
 # Change Log
 
+## [1.0.1] - 2025-09-22
+
+### Changed
+
+- Use HTML::Tiny for HTML generation
+
 ## [1.0.0] - 2025-09-22
 
 ### Changed
 
-- Module renamed from MooX::Role::OpenGraph to MooX::Role::SEOTags. Now supports OpenGraph, Twitter, and general SEO tags.
+- Module renamed from MooX::Role::OpenGraph to MooX::Role::SEOTags
 
 ### Added
 

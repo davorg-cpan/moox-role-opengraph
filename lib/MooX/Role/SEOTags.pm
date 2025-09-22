@@ -7,33 +7,35 @@ MooX::Role::SEOTags - A role for generating SEO meta tags (OpenGraph, Twitter, e
 
 =head1 SYNOPSIS
 
-	package MyWebPage;
-	use Moo;
-	with 'MooX::Role::SEOTags';
+    package MyWebPage;
+    use Moo;
+    with 'MooX::Role::SEOTags';
 
-	has 'og_title' => (is => 'ro', required => 1);
-	has 'og_type'  => (is => 'ro', required => 1);
-	has 'og_url'   => (is => 'ro', required => 1);
-	has 'og_image' => (is => 'ro'); # optional
+    has og_title       => (is => 'ro', required => 1);
+    has og_type        => (is => 'ro', required => 1);
+    has og_description => (is => 'ro', required => 1);
+    has og_url         => (is => 'ro', required => 1);
+    has og_image       => (is => 'ro'); # optional
 
-	# And later, in the code that builds the website
+    # And later, in the code that builds the website
 
-	my $page = MyWebPage->new(
-		og_title       => "My Page Title",
-		og_type        => "website",
-		og_description => 'This is a lovely website',
-		og_url         => "https://example.com/my-page",
-		og_image       => "https://example.com/image.jpg",
-	);
+    my $page = MyWebPage->new(
+      og_title       => "My Page Title",
+      og_type        => "website",
+      og_description => 'This is a lovely website',
+      og_url         => "https://example.com/my-page",
+      og_image       => "https://example.com/image.jpg",
+    );
 
-	# Print tags separately
+    # Print tags separately
 
-	print $page->title_tag;
-	print $page->canonical_tag;
-	print $page->og_tags;
+    print $page->title_tag;
+    print $page->canonical_tag;
+    print $page->og_tags;
 
-	# Or print all tags at once
-	print $page->tags;
+    # Or print all tags at once
+
+    print $page->tags;
 
 =head1 DESCRIPTION
 
@@ -45,6 +47,8 @@ requires the consuming class to implement the following attributes or methods:
 =item * og_title - The title of the page
 
 =item * og_type - The type of the page (e.g., "website", "article")
+
+=item * og_description - The description of the page
 
 =item * og_url - The canonical URL of the page
 
@@ -123,7 +127,7 @@ use feature qw[signatures];
 use Moo::Role;
 use HTML::Tiny;
 
-our $VERSION = '1.0.0';
+our $VERSION = '1.0.1';
 
 requires qw[og_title og_type og_description og_url];
 
