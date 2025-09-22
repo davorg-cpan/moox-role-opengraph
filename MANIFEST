@@ -1,4 +1,3 @@
-lib/MooX/Role/OpenGraph.pm
 lib/MooX/Role/SEOTags.pm
 Changes.md
 LICENSE
@@ -6,4 +5,7 @@ README.md
 MANIFEST
 t/lib/Object.pm
 t/object.t
+t/edge-cases.t
+t/pod.t
+t/pod-coverage.t
 Makefile.PL

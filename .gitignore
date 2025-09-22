@@ -4,6 +4,8 @@ Changes.md
 Makefile
 MooX-Role-OpenGraph-*/
 MooX-Role-OpenGraph-*.tar.gz
+MooX-Role-SEOTags-*/
+MooX-Role-SEOTags-*.tar.gz
 MYMETA.*
 META.*
 blib/
